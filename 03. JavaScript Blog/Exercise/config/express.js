@@ -25,7 +25,15 @@ module.exports = (app, config) => {
     app.use(passport.session());
 
     app.use((req, res, next) => {
-        if(req.user){
+        if (req.user) {
+            res.locals.user = req.user
+        }
+
+        next()
+    })
+
+    app.use((req, res, next) => {
+        if (req.user) {
             res.locals.user = req.user;
         }
 

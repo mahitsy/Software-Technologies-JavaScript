@@ -6,17 +6,18 @@ let userSchema = mongoose.Schema(
         email: {type: String, required: true, unique: true},
         passwordHash: {type: String, required: true},
         fullName: {type: String, required: true},
+        article: {type: [mongoose.Schema.Types.ObjectId], default: []},
         salt: {type: String, required: true}
     }
 );
 
-userSchema.method ({
-   authenticate: function (password) {
-       let inputPasswordHash = encryption.hashPassword(password, this.salt);
-       let isSamePasswordHash = inputPasswordHash === this.passwordHash;
+userSchema.method({
+    authenticate: function (password) {
+        let inputPasswordHash = encryption.hashPassword(password, this.salt);
+        let isSamePasswordHash = inputPasswordHash === this.passwordHash;
 
-       return isSamePasswordHash;
-   }
+        return isSamePasswordHash;
+    }
 });
 
 const User = mongoose.model('User', userSchema);
