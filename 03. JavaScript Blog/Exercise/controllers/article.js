@@ -28,6 +28,7 @@ module.exports = {
         let userId = req.user.id
         articleArgs.author = userId
 
+
         Article.create(articleArgs).then(article => {
             req.user.articles.push(article.id)
             req.user.save(err => {
@@ -79,6 +80,7 @@ module.exports = {
             res.render('article/edit', {error: errorMsg})
             return
         }
+
 
         Article.update({_id: id}, {$set: {title: articleArgs.title, content: articleArgs.content}})
             .then(() => {
@@ -144,7 +146,7 @@ module.exports = {
                 return
             }
 
-            req.user.isInRole('Admin').then(isAdmin=>{
+            req.user.isInRole('Admin').then(isAdmin => {
                 let isUserAuthorized = isAdmin || req.user.isAuthor(article)
 
                 res.render('article/details', {article: article, isUserAuthorized})
