@@ -125,6 +125,7 @@ module.exports = {
 
             let index = req.user.articles.indexOf(article.id)
             req.user.articles.splice(index, 1)
+            // req.user.articles.splice(index, 1)
 
             req.user.save(err => {
                 if (err) {
